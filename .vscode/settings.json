@@ -1,0 +1,8 @@
+{
+	"window.title": "${activeEditorShort}${separator}${rootName} ${separator} [Branch: main]",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode"
+}

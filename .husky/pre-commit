@@ -1,0 +1,23 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Check Prettier standards
+npm run check-format ||
+(
+    echo 'Prettier errors';
+    false;
+)
+
+# Check ESLint Standards
+npm run check-lint ||
+(
+        echo 'Eslint errors'
+        false; 
+)
+
+# Check tsconfig standards
+npm run check-types ||
+(
+    echo 'Ts errors'
+    false;
+)
