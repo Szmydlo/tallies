@@ -3,11 +3,21 @@
 	"extends": [
 		"next/core-web-vitals",
 		"plugin:@typescript-eslint/recommended",
+		"plugin:@typescript-eslint/recommended-requiring-type-checking",
 		"prettier"
 	],
 	"rules": {
-		// I suggest you add those two rules:
 		"@typescript-eslint/no-unused-vars": "error",
-		"@typescript-eslint/no-explicit-any": "error"
-	}
+		"@typescript-eslint/no-explicit-any": "error",
+		"@typescript-eslint/no-misused-promises": [
+			"error",
+			{
+				"checksVoidReturn": false
+			}
+		]
+	},
+	"parserOptions": {
+		"project": ["./tsconfig.json"]
+	},
+	"ignorePatterns": ["__tests__", "coverage", "*.config.js"]
 }
