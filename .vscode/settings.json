@@ -1,8 +1,23 @@
 {
-	"window.title": "${activeEditorShort}${separator}${rootName} ${separator} [Branch: main]",
+	"window.title": "${activeEditorShort}${separator}${rootName} ${separator} [Branch: test]",
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": true
 	},
 	"editor.formatOnSave": true,
-	"editor.defaultFormatter": "esbenp.prettier-vscode"
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"tailwindCSS.includeLanguages": {
+		"plaintext": "javascript"
+	},
+	"editor.quickSuggestions": {
+		"strings": true
+	},
+	"cSpell.words": [
+		"Kowalski",
+		"reduxjs",
+		"Signup",
+		"Singup",
+		"supabase",
+		"tailwindcss"
+	],
+	"jest.autoRun": "off"
 }
