@@ -24,21 +24,14 @@ jobs:
                   command: npm run test
     e2e:
         docker:
-            - image: cimg/node:16.15.0
+            - image: mcr.microsoft.com/playwright:v1.22.0-focal
+        environment:
+            NODE_ENV: development # Needed if playwright is in `devDependencies`
         steps:
             - checkout
-            - restore_cache: #cache dependencies to skip reinstall
-                  key: dependency-cache-{{ checksum "package.json" }}
             - run:
-                  name: Install dependencies
-                  command: npm install
-            - save_cache:
-                  key: dependency-cache-{{ checksum "package.json" }}
-                  paths:
-                      - ./node_modules
-            - run:
-                  name: Run test
-                  command: npm run test-e2e
+                  name: Run E2E test
+                  command: npm install && npm run test-e2e
 
 workflows:
     build_deploy_test:
