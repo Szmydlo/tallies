@@ -2,6 +2,7 @@
 
 ## May 2022:
 
+-   Playwright E2E Testing
 -   Jest + React Testing Library for unit tests
 
 ## April 2022:

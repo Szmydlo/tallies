@@ -10,4 +10,12 @@ Apparently you cannot reach 100% coverage on branches in Istanbul, because of so
 ### 26.05.2022
 
 Big break (back in Poland), coming back at full force. Apparently you cannot really test Redux using unit/integration tests, gonna use Playwright for that, but to do so I will need to deploy first...  
-Gotta use less mouse and finally learn keyboard shortcuts in VsCode
+Gotta use less mouse and finally learn keyboard shortcuts in VSCode  
+Apparently it is not so easy to store password in .env and then use it in playwright tests. There has to be special config file (globalSetup.ts), which runs
+
+```
+const projectDir = process.cwd();
+	loadEnvConfig(projectDir);
+```
+
+to make `process.env` accessible for tests
