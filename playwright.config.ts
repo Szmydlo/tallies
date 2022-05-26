@@ -33,7 +33,8 @@ const config: PlaywrightTestConfig = {
 		actionTimeout: 0,
 		/* Base URL to use in actions like `await page.goto('/')`. */
 		// baseURL: 'http://localhost:3000',
-		headless: false,
+		// TODO: Add logic for headed in dev and headless in prod
+		// headless: false,
 
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: "on-first-retry",
