@@ -31,7 +31,7 @@ jobs:
             - checkout
             - run:
                   name: Run E2E test
-                  command: npm run test
+                  command: npm run test-e2e
 
 workflows:
     heroku_deploy:
