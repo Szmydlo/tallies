@@ -2,14 +2,8 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import CloseButton from "../components/Buttons/CloseButton";
 import GoBackButton from "../components/Buttons/GoBackButton";
-import LogOutButton from "../components/Buttons/LogOutButton";
-import { useSelector, useDispatch } from "react-redux";
-
-const mockDispatch = jest.fn();
-jest.mock("react-redux", () => ({
-	useSelector: jest.fn(),
-	useDispatch: () => mockDispatch,
-}));
+import SignupButton from "../components/Buttons/SignupButton";
+import LoginButton from "../components/Buttons/LoginButton";
 
 // APPARENTLY CAN'T HIT 100% ON BRANCHES
 describe("Buttons", () => {
@@ -41,31 +35,32 @@ describe("Buttons", () => {
 		jest.resetAllMocks();
 	});
 
-	test("LogOutButton renders, edits route and dispatches an action", () => {
+	test("SignupButton renders and edits route", () => {
 		const useRouter = jest.spyOn(require("next/router"), "useRouter");
-		const mockGoBackFunction2 = jest.fn();
-		// const mockedDispatch = jest.fn(() => null);
+		const mockSignupNav = jest.fn();
 		useRouter.mockImplementationOnce(() => ({
-			push: mockGoBackFunction2,
+			push: mockSignupNav,
 		}));
 
-		// const useDispatch = jest.spyOn(require("react-redux"), "useDispatch");
-		// jest.spyOn(foo, "useDispatch").mockReturnValue(mockedDispatch);
+		render(<SignupButton />);
 
-		// const mockGoBackFunction = jest.fn();
-
-		const mockedDispatch = jest.fn();
-		useSelector.mockImplementation((selectorFn) => selectorFn());
-		useDispatch.mockReturnValue(mockedDispatch);
-
-		render(<LogOutButton />);
-
-		const button = screen.getByText(/Go back/i);
+		const button = screen.getByText(/Sign up/i);
 		fireEvent.click(button);
 
-		expect(mockGoBackFunction2).toBeCalled();
-		// expect(loginFn).toBeCalled();
-		expect(mockDispatch).toHaveBeenCalled(/*arguments your expect*/);
+		expect(mockSignupNav).toBeCalled();
+
 		jest.resetAllMocks();
+	});
+
+	test("Login button renders and clicks", () => {
+		const onLoginMock = jest.fn();
+		render(<LoginButton onShowModal={onLoginMock} />);
+
+		const button = screen.getByText(/Login/i);
+		console.log(button);
+		fireEvent.click(button);
+
+		expect(button).toBeInTheDocument();
+		expect(onLoginMock).toHaveBeenCalled();
 	});
 });
