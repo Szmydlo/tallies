@@ -31,10 +31,10 @@ jobs:
             - checkout
             - run:
                   name: Run E2E test
-                  command: npm run test-e2e
+                  command: npm install && npm run test-e2e
 
 workflows:
-    heroku_deploy:
+    build_deploy_test:
         jobs:
             - build
             - heroku/deploy-via-git:
