@@ -12,3 +12,4 @@ First app to properly challenge your friends!
 
 -   Front: React (Next.js) TS, Tailwind CSS
 -   Backend: Supabase
+-   Testing: Jest + React Test Library
