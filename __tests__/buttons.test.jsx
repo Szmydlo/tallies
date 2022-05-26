@@ -57,7 +57,6 @@ describe("Buttons", () => {
 		render(<LoginButton onShowModal={onLoginMock} />);
 
 		const button = screen.getByText(/Login/i);
-		console.log(button);
 		fireEvent.click(button);
 
 		expect(button).toBeInTheDocument();
