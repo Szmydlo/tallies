@@ -14,7 +14,8 @@
 			{
 				"checksVoidReturn": false
 			}
-		]
+		],
+		"no-console": "warn"
 	},
 	"parserOptions": {
 		"project": ["./tsconfig.json"]
