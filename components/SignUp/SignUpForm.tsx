@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../store/auth";
 import { Action } from "@reduxjs/toolkit";
+import { useForm } from "../../hooks/useForm";
 
 export const SignUpForm = () => {
 	const name = useRef<HTMLInputElement>(null);
@@ -12,37 +13,79 @@ export const SignUpForm = () => {
 	const [userExists, setUserExists] = useState(false);
 	const router = useRouter();
 	const dispatch = useDispatch();
+
+	const handleCreateUser = async () => {
+		// useForm checks whether values are available and correct
+		const enteredEmail = email.current?.value || "";
+		const enteredPassword = password.current?.value || "";
+		const enteredName = name.current?.value || "";
+		if (!(await checkIfUserExists(enteredEmail))) {
+			setUserExists(false);
+			const isCreated = await createUser(enteredEmail, enteredPassword, {
+				first_name: enteredName,
+			});
+			if (isCreated) {
+				console.log("User successfully created!");
+				dispatch(authActions.login() as Action);
+				await router.push("/overview");
+			}
+		} else {
+			setUserExists(true);
+		}
+	};
+
+	const options = {
+		onSubmit: handleCreateUser,
+		validations: {
+			name: {
+				required: {
+					value: true,
+					message: "Name is required",
+				},
+				pattern: {
+					value: "^[A-Z][a-zA-Z]*$",
+					message:
+						"Name has to be one word and start with capital letter",
+				},
+			},
+			password: {
+				required: {
+					value: true,
+					message: "Password is required",
+				},
+				pattern: {
+					value: "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",
+					message:
+						"Password must contain: minimum 8 characters, one uppercase letter," +
+						"one lowercase, one number and one special character (@$!%*#?&)",
+				},
+			},
+			email: {
+				required: {
+					value: true,
+					message: "Email is required",
+				},
+			},
+		},
+	};
+	const { handleSubmit, handleChange, errors } = useForm(options);
+	const handleChangeName = handleChange("name");
+	const handleChangeEmail = handleChange("email");
+	const handleChangePassword = handleChange("password");
 	return (
-		<form
-			className="w-72"
-			onSubmit={async (e) => {
-				e.preventDefault();
-				const enteredEmail = email.current?.value as string;
-				const enteredPassword = password.current?.value as string;
-				const enteredName = name.current?.value as string;
-				if (!(await checkIfUserExists(enteredEmail))) {
-					setUserExists(false);
-					const isCreated = await createUser(
-						enteredEmail,
-						enteredPassword,
-						{
-							first_name: enteredName,
-						}
-					);
-					if (isCreated) {
-						console.log("User successfully created!");
-						dispatch(authActions.login() as Action);
-						await router.push("/overview");
-					}
-				} else {
-					setUserExists(true);
-				}
-			}}
-		>
+		<form className="w-72" onSubmit={handleSubmit}>
 			<div className="mb-4 rounded border-2 border-solid border-black">
 				<div className="mb-2">
 					<label>First Name: </label>
-					<input type="text" placeholder="Jan" ref={name} />
+					<input
+						type="text"
+						placeholder="Jan"
+						ref={name}
+						onChange={handleChangeName}
+					/>
+					{errors.name && (
+						<p className="text-[8px] text-red-500">{errors.name}</p>
+					)}
 				</div>
 				<div className="mb-2">
 					<label>Email: </label>
@@ -53,11 +96,27 @@ export const SignUpForm = () => {
 						type="email"
 						placeholder="example@example.com"
 						ref={email}
+						onChange={handleChangeEmail}
 					/>
+					{errors.email && (
+						<p className="text-[8px] text-red-500">
+							{errors.email}
+						</p>
+					)}
 				</div>
 				<div className="mb-2">
 					<label>Password: </label>
-					<input type="password" ref={password} autoComplete="off" />
+					<input
+						type="password"
+						ref={password}
+						autoComplete="off"
+						onChange={handleChangePassword}
+					/>
+					{errors.password && (
+						<p className="text-[8px] text-red-500">
+							{errors.password}
+						</p>
+					)}
 				</div>
 			</div>
 			<div className="flex justify-center">
