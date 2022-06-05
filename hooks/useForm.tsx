@@ -6,7 +6,7 @@ interface Validation {
 		message: string;
 	};
 	pattern?: {
-		value: string;
+		value: RegExp;
 		message: string;
 	};
 	custom?: {
@@ -52,6 +52,7 @@ export const useForm = <
 				if (validation?.required?.value && !value) {
 					valid = false;
 					newErrors[key] = validation?.required?.message;
+					continue; // for most important error to preserve
 				}
 
 				// match pattern
@@ -62,6 +63,7 @@ export const useForm = <
 				) {
 					valid = false;
 					newErrors[key] = pattern?.message;
+					continue; // for most important error to preserve
 				}
 
 				// custom valid function
