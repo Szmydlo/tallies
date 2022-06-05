@@ -1,9 +1,11 @@
-import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
+
+import { fireEvent, render, screen } from "@testing-library/react";
+
 import CloseButton from "../components/Buttons/CloseButton";
 import GoBackButton from "../components/Buttons/GoBackButton";
-import SignupButton from "../components/Buttons/SignupButton";
 import LoginButton from "../components/Buttons/LoginButton";
+import SignupButton from "../components/Buttons/SignupButton";
 
 // APPARENTLY CAN'T HIT 100% ON BRANCHES
 describe("Buttons", () => {
