@@ -1,4 +1,4 @@
-# Hi, there, I will be putting some thoughts here.
+# Hi there, I will be putting some thoughts here.
 
 ## Setting up everything to push first commit with something that looks like an app, not only config files
 
@@ -18,4 +18,17 @@ const projectDir = process.cwd();
 	loadEnvConfig(projectDir);
 ```
 
-to make `process.env` accessible for tests
+to make `process.env` accessible for tests. To make it available in CircleCI it has to be deployed again, but it is quite fast thanks to caching `node_modules`
+
+### 27.05.2022
+
+Yesterday evening I managed to deploy and integrate unit/integration tests and also e2e tests into pipeline. Yay!  
+Now I was searching for a solution to test email signup confirmation, but all the solutions I found are not free, so I'd rather skip this testcase
+
+### 29.05.2022
+
+Having problems writing testable code in React... I'm gonna practice TS a little bit more with custom hook for form validation and submission. It should be also more testable. Playwright makes writing E2E tests super easy, but before that let's focus on extending integration/unit tests.
+
+### 03.06.22
+
+Validation done both for signing in and logging in. Let's test it
