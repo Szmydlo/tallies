@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
 import { checkIfUserExists, createUser } from "../../supabase-client";
-import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { authActions } from "../../store/auth";
+
 import { Action } from "@reduxjs/toolkit";
+import { authActions } from "../../store/auth";
+import { useDispatch } from "react-redux";
 import { useForm } from "../../hooks/useForm";
+import { useRouter } from "next/router";
 
 export const SignUpForm = () => {
 	const name = useRef<HTMLInputElement>(null);
@@ -25,7 +26,6 @@ export const SignUpForm = () => {
 				first_name: enteredName,
 			});
 			if (isCreated) {
-				console.log("User successfully created!");
 				dispatch(authActions.login() as Action);
 				await router.push("/overview");
 			}
@@ -43,7 +43,7 @@ export const SignUpForm = () => {
 					message: "Name is required",
 				},
 				pattern: {
-					value: "^[A-Z][a-zA-Z]*$",
+					value: /^[A-Z][a-zA-Z]*$/,
 					message:
 						"Name has to be one word and start with capital letter",
 				},
@@ -54,7 +54,7 @@ export const SignUpForm = () => {
 					message: "Password is required",
 				},
 				pattern: {
-					value: "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",
+					value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
 					message:
 						"Password must contain: minimum 8 characters, one uppercase letter," +
 						"one lowercase, one number and one special character (@$!%*#?&)",
@@ -64,6 +64,10 @@ export const SignUpForm = () => {
 				required: {
 					value: true,
 					message: "Email is required",
+				},
+				pattern: {
+					value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+					message: "Email must match RFC 5322 Official Standard",
 				},
 			},
 		},

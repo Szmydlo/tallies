@@ -1,10 +1,11 @@
-import { useRouter } from "next/router";
 import React, { useRef } from "react";
+
+import { Action } from "@reduxjs/toolkit";
+import { authActions } from "../../store/auth";
 import { supabase } from "../../supabase-client";
 import { useDispatch } from "react-redux";
-import { authActions } from "../../store/auth";
-import { Action } from "@reduxjs/toolkit";
 import { useForm } from "../../hooks/useForm";
+import { useRouter } from "next/router";
 
 const LoginInputs = (props: { onSuccess: () => void }) => {
 	const dispatch = useDispatch();
@@ -21,8 +22,6 @@ const LoginInputs = (props: { onSuccess: () => void }) => {
 			password: enteredPassword,
 		});
 
-		console.log(session);
-
 		if (session) {
 			props.onSuccess();
 			dispatch(authActions.login() as Action);
@@ -38,11 +37,21 @@ const LoginInputs = (props: { onSuccess: () => void }) => {
 					value: true,
 					message: "Password is required",
 				},
+				pattern: {
+					value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+					message:
+						"Password must contain: minimum 8 characters, one uppercase letter," +
+						"one lowercase, one number and one special character (@$!%*#?&)",
+				},
 			},
 			email: {
 				required: {
 					value: true,
 					message: "Email is required",
+				},
+				pattern: {
+					value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+					message: "Email must match RFC 5322 Official Standard",
 				},
 			},
 		},
