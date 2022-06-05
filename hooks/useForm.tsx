@@ -9,10 +9,6 @@ interface Validation {
 		value: RegExp;
 		message: string;
 	};
-	custom?: {
-		isValid: (value: string) => boolean;
-		message: string;
-	};
 }
 
 type ErrorRecord<T> = Partial<Record<keyof T, string>>;
@@ -64,13 +60,6 @@ export const useForm = <
 					valid = false;
 					newErrors[key] = pattern?.message;
 					continue; // for most important error to preserve
-				}
-
-				// custom valid function
-				const custom = validation?.custom;
-				if (custom?.isValid && !custom.isValid(value as string)) {
-					valid = false;
-					newErrors[key] = custom.message;
 				}
 			}
 
