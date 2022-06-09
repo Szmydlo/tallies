@@ -1,10 +1,17 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+# Fix Prettier error
+npm run format ||
+(
+    echo 'Prettier errors (format)';
+    false;
+)
+
 # Check Prettier standards
 npm run check-format ||
 (
-    echo 'Prettier errors';
+    echo 'Prettier errors (check)';
     false;
 )
 
