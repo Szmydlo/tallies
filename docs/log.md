@@ -1,5 +1,10 @@
 # Log of development process
 
+## June 2022:
+
+-   Persistent sessions through localStorage
+-   Input validation
+
 ## May 2022:
 
 -   Playwright E2E Testing

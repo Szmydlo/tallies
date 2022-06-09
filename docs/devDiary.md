@@ -29,6 +29,19 @@ Now I was searching for a solution to test email signup confirmation, but all th
 
 Having problems writing testable code in React... I'm gonna practice TS a little bit more with custom hook for form validation and submission. It should be also more testable. Playwright makes writing E2E tests super easy, but before that let's focus on extending integration/unit tests.
 
-### 03.06.22
+### 03.06.2022
 
 Validation done both for signing in and logging in. Let's test it
+
+### 05.06.2022
+
+Remember to remove `type="email"` from input before. It blocks value from passing onto next functions
+
+### 06.06.2022
+
+New topic: localStorage. First needed to implement some RLS in Supabase for testing (now user sees theirs email while logged on). I'm trying to create a custom hook for handling operations on localStorage.  
+OMG Supabase has everything already implemented... I realized after finishing useSession hook :/
+
+### 09.06.2022
+
+RouteGuard created to use current session and login automatically! Need to work a little on catching errors from backend and also on blocking user calls to backend (RLS Supabase). Question for later: is there a way not to check on every page whether the user is authorized?
