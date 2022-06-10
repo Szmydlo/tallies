@@ -1,4 +1,8 @@
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import {
+	AuthSession,
+	SupabaseClient,
+	createClient,
+} from "@supabase/supabase-js";
 
 export const supabase: SupabaseClient = createClient(
 	process.env.NEXT_PUBLIC_SUPABASE_URL as string,
@@ -18,7 +22,7 @@ export const createUser = async (
 	password: string,
 	data: object
 ) => {
-	const { user, session, error } = await supabase.auth.signUp(
+	const { error } = await supabase.auth.signUp(
 		{
 			email: email,
 			password: password,
@@ -27,6 +31,38 @@ export const createUser = async (
 			data: data,
 		}
 	);
-	console.log("supa", user, session, error);
-	return true;
+	if (!error) {
+		return true;
+	}
+	throw error;
+};
+
+const isExpired = (expiryDate: number): boolean => {
+	return expiryDate > +new Date();
+};
+
+export const getSessionOrNull = (): AuthSession | null => {
+	const session: AuthSession | null = supabase.auth.session();
+
+	// check if session exists
+	if (session) {
+		// and is not expired
+		if (!isExpired(session.expires_at as number)) return session;
+	}
+	return null;
+};
+
+export const isLoggedIn = (): boolean => {
+	const session: AuthSession | null = supabase.auth.session();
+
+	// check if session exists
+	if (session) {
+		// and is not expired
+		if (!isExpired(session.expires_at as number)) return true;
+	}
+	return false;
+};
+
+export const clearSession = (): void => {
+	localStorage.clear();
 };
