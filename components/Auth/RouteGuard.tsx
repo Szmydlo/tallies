@@ -14,16 +14,25 @@ const RouteGuard = (props: Props) => {
 	const dispatch = useDispatch();
 	const router = useRouter();
 
+	const logIn = async () => {
+		dispatch(authActions.login() as Action);
+		await router.push("/overview");
+	};
 	useEffect(
 		() => {
-			const logIn = async () => {
-				dispatch(authActions.login() as Action);
-				await router.push("/overview");
-			};
-			if (isLoggedIn()) {
-				logIn().catch(() => {
-					throw new Error("Could not logged into previous session");
-				});
+			if (!router.pathname.includes("_error")) {
+				if (isLoggedIn()) {
+					logIn().catch(() => {
+						throw new Error(
+							"Could not logged into previous session"
+						);
+					});
+				} else {
+					// not logged in => redirect to index
+					router.push("/").catch(() => {
+						throw new Error("Could not return to index page");
+					});
+				}
 			}
 		},
 		[
