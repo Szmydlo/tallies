@@ -12,6 +12,7 @@ export const SignUpForm = () => {
 	const email = useRef<HTMLInputElement>(null);
 	const password = useRef<HTMLInputElement>(null);
 	const [userExists, setUserExists] = useState(false);
+	const [creationError, setCreationError] = useState(false);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
@@ -27,7 +28,13 @@ export const SignUpForm = () => {
 			});
 			if (isCreated) {
 				dispatch(authActions.login() as Action);
-				await router.push("/overview");
+				try {
+					await router.push("/overview");
+				} catch (e) {
+					throw new Error(e as string);
+				}
+			} else {
+				setCreationError(true);
 			}
 		} else {
 			setUserExists(true);
@@ -95,7 +102,9 @@ export const SignUpForm = () => {
 					<label>Email: </label>
 					<input
 						className={`${
-							userExists ? "rounded border-2 border-red-500" : ""
+							userExists || creationError
+								? "rounded border-2 border-red-500"
+								: ""
 						}`}
 						type="email"
 						placeholder="example@example.com"
@@ -105,6 +114,11 @@ export const SignUpForm = () => {
 					{errors.email && (
 						<p className="text-[8px] text-red-500">
 							{errors.email}
+						</p>
+					)}
+					{(userExists || creationError) && (
+						<p className="text-[8px] text-red-500">
+							There was an error
 						</p>
 					)}
 				</div>

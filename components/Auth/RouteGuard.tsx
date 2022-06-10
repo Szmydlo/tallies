@@ -21,7 +21,9 @@ const RouteGuard = (props: Props) => {
 				await router.push("/overview");
 			};
 			if (isLoggedIn()) {
-				logIn().catch(console.error);
+				logIn().catch(() => {
+					throw new Error("Could not logged into previous session");
+				});
 			}
 		},
 		[

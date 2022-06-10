@@ -1,11 +1,15 @@
-import { useRouter } from "next/router";
 import React from "react";
+import { useRouter } from "next/router";
 
 const GoBackButton = () => {
 	const router = useRouter();
 
 	const goBack = async (): Promise<void> => {
-		await router.push("/");
+		try {
+			await router.push("/");
+		} catch (e) {
+			throw new Error(e as string);
+		}
 	};
 	return (
 		<button onClick={goBack} className="py-5 px-3">

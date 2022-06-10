@@ -21,11 +21,14 @@ const LoginInputs = (props: { onSuccess: () => void }) => {
 			email: enteredEmail,
 			password: enteredPassword,
 		});
-
 		if (session) {
 			props.onSuccess();
 			dispatch(authActions.login() as Action);
-			await router.push("/overview");
+			try {
+				await router.push("/overview");
+			} catch (e) {
+				throw new Error(e as string);
+			}
 		}
 	};
 
