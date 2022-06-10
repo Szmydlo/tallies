@@ -45,3 +45,7 @@ OMG Supabase has everything already implemented... I realized after finishing us
 ### 09.06.2022
 
 RouteGuard created to use current session and login automatically! Need to work a little on catching errors from backend and also on blocking user calls to backend (RLS Supabase). Question for later: is there a way not to check on every page whether the user is authorized?
+
+### 10.06.2022
+
+Catching errors implemented! I also managed to make 404 "intelligent", it can distinguish between logged and not logged user

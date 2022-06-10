@@ -2,6 +2,7 @@
 
 ## June 2022:
 
+-   Redirection based on auth status
 -   Persistent sessions through localStorage
 -   Input validation
 
