@@ -76,8 +76,9 @@ jobs:
                   paths:
                       - .nyc_output/*
             - run: ls ./.nyc_output
+            - run: cp -a ./.nyc_output/. /tmp/coverage
             - store_artifacts:
-                  path: /tmp/.nyc_output
+                  path: /tmp/coverage
 
 workflows:
     build_test_deploy:
