@@ -1,15 +1,19 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "./baseFixtures";
 
 const pass = process.env.NEXT_PUBLIC_TESTUSER_PASS as string;
 
+type Sources = {
+	source: string;
+};
+
 test.beforeEach(async ({ page }) => {
-	await page.goto("https://tallies-app.herokuapp.com/");
+	// await page.goto("https://tallies-app.herokuapp.com/");
+	await page.goto("http://localhost:3000/");
 });
 
 test.describe("Login", () => {
 	test("Should open modal and login", async ({ page }) => {
-		// Create 1st todo.
-		await page.click("text=Login");
+		await page.click("text=Log in");
 
 		await page.fill('input[type="email"]', "playwright@test.com");
 		await page.fill('input[type="password"]', pass);

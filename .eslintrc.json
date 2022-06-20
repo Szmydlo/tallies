@@ -20,5 +20,5 @@
 	"parserOptions": {
 		"project": ["./tsconfig.json"]
 	},
-	"ignorePatterns": ["__tests__", "coverage", "*.config.js"]
+	"ignorePatterns": ["coverage", "*.config.js", "tests", "__tests__"]
 }
