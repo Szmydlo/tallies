@@ -34,9 +34,9 @@ jobs:
         environment:
             - NODE_ENV: development
         steps:
+            - checkout
             - attach_workspace:
                   at: ./
-            - checkout
             - restore_cache: #cache dependencies to skip reinstall
                   key: dependency-cache-{{ checksum "package.json" }}
             - run:
