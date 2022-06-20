@@ -43,7 +43,7 @@ workflows:
             - build_and_test
             - heroku/deploy-via-git:
                   requires:
-                      - build
+                      - build_and_test
                   filters:
                       branches:
                           only: main
