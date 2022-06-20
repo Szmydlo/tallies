@@ -5,7 +5,7 @@ orbs:
     heroku: circleci/heroku@0.0.10
 
 jobs:
-    build_and_test:
+    build_and_jest:
         docker:
             - image: cimg/node:16.15.0
         environment:
@@ -22,28 +22,68 @@ jobs:
                   paths:
                       - ./node_modules
             - run:
-                  name: Run server in background
-                  command: npm run dev
-                  background: true
-            - run:
                   name: Run test (Jest)
                   command: npm run test
+            - persist_to_workspace:
+                  root: .
+                  paths:
+                      - .nyc_output/*
+    create_report:
+        docker:
+            - image: cimg/node:16.15.0
+        environment:
+            - NODE_ENV: development
+        steps:
+            - attach_workspace:
+                  at: ./
+            - checkout
+            - restore_cache: #cache dependencies to skip reinstall
+                  key: dependency-cache-{{ checksum "package.json" }}
             - run:
-                  name: Run test (Playwright)
-                  command: npm run test-e2e
+                  name: Install dependencies
+                  command: npm install
+            - save_cache:
+                  key: dependency-cache-{{ checksum "package.json" }}
+                  paths:
+                      - ./node_modules
             - run:
                   name: Create coverage report
                   command: npm run create-report
             - store_artifacts:
                   path: /coverage
+    e2e:
+        docker:
+            - image: mcr.microsoft.com/playwright:v1.22.0-focal
+        environment:
+            NODE_ENV: development # Needed if playwright is in `devDependencies`
+        steps:
+            - checkout
+            - run:
+                  name: Install dependencies
+                  command: npm install
+            - run:
+                  name: Run server in background
+                  command: npm run dev
+                  background: true
+            - run:
+                  name: Run test (Playwright)
+                  command: npm run test-e2e
+            - persist_to_workspace:
+                  root: .
+                  paths:
+                      - .nyc_output/*
 
 workflows:
     build_test_deploy:
         jobs:
-            - build_and_test
+            - build_and_jest
+            - e2e
+            - create_report
             - heroku/deploy-via-git:
                   requires:
-                      - build_and_test
+                      - build_and_jest
+                      - e2e
+                      - create_report
                   filters:
                       branches:
                           only: main
