@@ -64,6 +64,12 @@ jobs:
                   name: Install dependencies
                   command: npm install
             - run:
+                  name: Install npx
+                  command: npm install -g npx
+            - run:
+                  name: Install browsers for Playwright
+                  command: npx playwright install
+            - run:
                   name: Run server in background
                   command: npm run dev
                   background: true
