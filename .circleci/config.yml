@@ -65,6 +65,7 @@ jobs:
                   name: Run server in background
                   command: npm run dev
                   background: true
+            - run: sleep 10
             - run:
                   name: Run test (Playwright)
                   command: npm run test-e2e
@@ -77,12 +78,14 @@ workflows:
     build_test_deploy:
         jobs:
             - build_and_jest
-            - e2e
-            - create_report
-            - heroku/deploy-via-git:
+            - e2e:
                   requires:
                       - build_and_jest
+            - create_report:
+                  requires:
                       - e2e
+            - heroku/deploy-via-git:
+                  requires:
                       - create_report
                   filters:
                       branches:
