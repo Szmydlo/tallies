@@ -68,7 +68,7 @@ jobs:
                   command: npx playwright install
             - run:
                   name: Install dependencies
-                  command: sudo npx playwright install-deps
+                  command: npx playwright install-deps
             - run:
                   name: Run server in background
                   command: npm run dev
