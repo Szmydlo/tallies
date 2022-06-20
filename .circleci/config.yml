@@ -28,6 +28,7 @@ jobs:
                   root: .
                   paths:
                       - .nyc_output/*
+            - run: ls ./.nyc_output
     create_report:
         docker:
             - image: cimg/node:16.15.0
@@ -51,6 +52,7 @@ jobs:
                   command: npm run create-report
             - store_artifacts:
                   path: /coverage
+            - run: ls ./.nyc_output
     e2e:
         docker:
             - image: mcr.microsoft.com/playwright:v1.22.0-focal
@@ -73,6 +75,7 @@ jobs:
                   root: .
                   paths:
                       - .nyc_output/*
+            - run: ls ./.nyc_output
 
 workflows:
     build_test_deploy:
