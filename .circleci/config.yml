@@ -53,6 +53,9 @@ jobs:
             - store_artifacts:
                   path: /coverage
             - run: ls ./.nyc_output
+            - run: cp -a ./.nyc_output/. /tmp/coverage
+            - store_artifacts:
+                  path: /tmp/coverage
     e2e:
         docker:
             - image: cimg/node:16.15.0
@@ -83,9 +86,6 @@ jobs:
                   paths:
                       - .nyc_output/*
             - run: ls ./.nyc_output
-            - run: cp -a ./.nyc_output/. /tmp/coverage
-            - store_artifacts:
-                  path: /tmp/coverage
 
 workflows:
     build_test_deploy:
