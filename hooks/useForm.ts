@@ -26,7 +26,7 @@ export const useForm = <
 	const [errors, setErrors] = useState<ErrorRecord<T>>({});
 
 	const handleChange =
-		<S,>(key: keyof T, sanitizeFn?: (value: string) => S) =>
+		<S>(key: keyof T, sanitizeFn?: (value: string) => S) =>
 		(e: ChangeEvent<HTMLInputElement & HTMLSelectElement>) => {
 			const value = sanitizeFn
 				? sanitizeFn(e.target.value)
