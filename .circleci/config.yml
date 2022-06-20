@@ -55,7 +55,7 @@ jobs:
             - run: ls ./.nyc_output
     e2e:
         docker:
-            - image: mcr.microsoft.com/playwright:v1.22.0-focal
+            - image: cimg/node:16.15.0
         environment:
             NODE_ENV: development # Needed if playwright is in `devDependencies`
         steps:
