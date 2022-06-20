@@ -76,6 +76,8 @@ jobs:
                   paths:
                       - .nyc_output/*
             - run: ls ./.nyc_output
+            - store_artifacts:
+                  path: /.nyc_output
 
 workflows:
     build_test_deploy:
