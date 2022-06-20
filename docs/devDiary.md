@@ -49,3 +49,16 @@ RouteGuard created to use current session and login automatically! Need to work 
 ### 10.06.2022
 
 Catching errors implemented! I also managed to make 404 "intelligent", it can distinguish between logged and not logged user
+
+### 12.06.2022
+
+I believe I found the way to finally be able to test redux (it has taken so much time because I was looking for particularly testing dispatch instead of whole redux): `redux-mock-store`. Gonna focus on testing today.  
+It is easier to change the approach to buttons: now just primary and secondary (finally testable!)
+
+### 14.06.2022
+
+I managed to obtain merged coverage report from Jest and Playwright! Of course locally. Tomorrow I will try to implement it in CircleCI and maybe try to return it from build
+
+### 20.06.2022
+
+I haven't noticed that Jest and Playwright interpret lines differently, which breaks reports totally. I spent additional 5 hours on fixing this, but now it works (almost perfectly: it sometimes includes "import" statement, sometimes not), at least with line coverage. Gonna use it in CircleCI. I'm also thinking about creating Medium article as this is not really described and requires combining multiple things together.
