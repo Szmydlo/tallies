@@ -50,10 +50,8 @@ jobs:
             - run:
                   name: Create coverage report
                   command: npm run create-report
-            - store_artifacts:
-                  path: /coverage
             - run: ls ./.nyc_output
-            - run: cp -a ./.nyc_output/. /tmp/coverage
+            - run: cp -a ./coverage/. /tmp/coverage
             - store_artifacts:
                   path: /tmp/coverage
     e2e:
