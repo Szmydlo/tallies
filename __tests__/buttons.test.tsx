@@ -2,66 +2,62 @@ import "@testing-library/jest-dom";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 
-import CloseButton from "../components/Buttons/CloseButton";
-import GoBackButton from "../components/Buttons/GoBackButton";
-import LoginButton from "../components/Buttons/LoginButton";
-import SignupButton from "../components/Buttons/SignupButton";
+import PrimaryButton from "../components/Buttons/PrimaryButton";
+import SecondaryButton from "../components/Buttons/SecondaryButton";
+
+// import configureStore from "redux-mock-store";
+
+// const mockStore = configureStore([]);
 
 // APPARENTLY CAN'T HIT 100% ON BRANCHES
 describe("Buttons", () => {
-	test("Close button renders and clicks", () => {
-		const onCloseMock = jest.fn();
-		render(<CloseButton onClose={onCloseMock} />);
+	test("Primary Button renders and clicks", () => {
+		const onClickMock = jest.fn();
+		render(<PrimaryButton onClick={onClickMock} text="test" />);
 
-		const button = screen.getByText(/Close/i);
+		const button = screen.getByText(/test/i);
 		fireEvent.click(button);
 
 		expect(button).toBeInTheDocument();
-		expect(onCloseMock).toHaveBeenCalled();
+		expect(onClickMock).toHaveBeenCalled();
 	});
 
-	test("GoBackButton renders and edits route", () => {
-		const useRouter = jest.spyOn(require("next/router"), "useRouter");
-		const mockGoBackFunction = jest.fn();
-		useRouter.mockImplementationOnce(() => ({
-			push: mockGoBackFunction,
-		}));
+	test("Primary Button has type set", () => {
+		const onClickMock = jest.fn();
+		render(
+			<PrimaryButton onClick={onClickMock} text="test" type="submit" />
+		);
 
-		render(<GoBackButton />);
-
-		const button = screen.getByText(/Go back/i);
-		fireEvent.click(button);
-
-		expect(mockGoBackFunction).toBeCalled();
-
-		jest.resetAllMocks();
-	});
-
-	test("SignupButton renders and edits route", () => {
-		const useRouter = jest.spyOn(require("next/router"), "useRouter");
-		const mockSignupNav = jest.fn();
-		useRouter.mockImplementationOnce(() => ({
-			push: mockSignupNav,
-		}));
-
-		render(<SignupButton />);
-
-		const button = screen.getByText(/Sign up/i);
-		fireEvent.click(button);
-
-		expect(mockSignupNav).toBeCalled();
-
-		jest.resetAllMocks();
-	});
-
-	test("Login button renders and clicks", () => {
-		const onLoginMock = jest.fn();
-		render(<LoginButton onShowModal={onLoginMock} />);
-
-		const button = screen.getByText(/Login/i);
+		const button: HTMLButtonElement = screen.getByText(/test/i);
 		fireEvent.click(button);
 
 		expect(button).toBeInTheDocument();
-		expect(onLoginMock).toHaveBeenCalled();
+		expect(button.type).toEqual("submit");
+		expect(onClickMock).toHaveBeenCalled();
+	});
+
+	test("Secondary Button renders and clicks", () => {
+		const onClickMock = jest.fn();
+		render(<SecondaryButton onClick={onClickMock} text="test" />);
+
+		const button = screen.getByText(/test/i);
+		fireEvent.click(button);
+
+		expect(button).toBeInTheDocument();
+		expect(onClickMock).toHaveBeenCalled();
+	});
+
+	test("Secondary Button has type set", () => {
+		const onClickMock = jest.fn();
+		render(
+			<SecondaryButton onClick={onClickMock} text="test" type="submit" />
+		);
+
+		const button: HTMLButtonElement = screen.getByText(/test/i);
+		fireEvent.click(button);
+
+		expect(button).toBeInTheDocument();
+		expect(button.type).toEqual("submit");
+		expect(onClickMock).toHaveBeenCalled();
 	});
 });

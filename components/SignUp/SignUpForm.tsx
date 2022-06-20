@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { checkIfUserExists, createUser } from "../../supabase-client";
 
 import { Action } from "@reduxjs/toolkit";
+import PrimaryButton from "../Buttons/PrimaryButton";
 import { authActions } from "../../store/auth";
 import { useDispatch } from "react-redux";
 import { useForm } from "../../hooks/useForm";
@@ -138,12 +139,7 @@ export const SignUpForm = () => {
 				</div>
 			</div>
 			<div className="flex justify-center">
-				<button
-					className="rounded bg-yellow-400 py-2 px-3 text-yellow-900 transition duration-300 hover:bg-yellow-300 hover:text-yellow-800"
-					type="submit"
-				>
-					Sign up
-				</button>
+				<PrimaryButton type="submit" text="Sign up" />
 			</div>
 		</form>
 	);

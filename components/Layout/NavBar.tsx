@@ -1,12 +1,14 @@
-import { useRouter } from "next/router";
+import { clearSession, supabase } from "../../supabase-client";
 import { useEffect, useReducer } from "react";
-import { useSelector } from "react-redux";
-import GoBackButton from "../Buttons/GoBackButton";
-import LoginButton from "../Buttons/LoginButton";
-import LogOutButton from "../Buttons/LogOutButton";
-import SignupButton from "../Buttons/SignupButton";
+
 import LoginModal from "../Login/LoginModal";
+import PrimaryButton from "../Buttons/PrimaryButton";
 import { RootState } from "../../store";
+import SecondaryButton from "../Buttons/SecondaryButton";
+import { authActions } from "../../store/auth";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 interface State {
 	isLoginModalVisible: boolean;
@@ -63,7 +65,31 @@ export const NavBar = () => {
 		(state) => state.auth.isAuth
 	);
 	const router = useRouter();
+	const dispatchAuth = useDispatch();
 	const [state, dispatch] = useReducer(reducer, initialState);
+
+	const handleOpenLoginModal = (): void => {
+		dispatch({ type: "login" });
+	};
+
+	const handleRedirect = async (page = "/"): Promise<void> => {
+		try {
+			await router.push(page);
+		} catch (e) {
+			throw new Error(e as string);
+		}
+	};
+
+	const handleLogout = async () => {
+		try {
+			clearSession();
+			await supabase.auth.signOut();
+			dispatchAuth(authActions.logout() as Action);
+			await router.push("/");
+		} catch (e) {
+			throw new Error(e as string);
+		}
+	};
 
 	// adapt navBar buttons based on router.pathname
 	useEffect(() => {
@@ -87,20 +113,32 @@ export const NavBar = () => {
 						<div className="flex space-x-4">
 							<div className="flex items-center space-x-1">
 								{state.isLoginButtonVisible && (
-									<LoginButton
-										onShowModal={() =>
-											dispatch({ type: "login" })
-										}
+									<SecondaryButton
+										onClick={handleOpenLoginModal}
+										text="Log in"
 									/>
 								)}
 								{state.isSignUpButtonVisible && (
-									<SignupButton />
+									<PrimaryButton
+										onClick={async () => {
+											await handleRedirect("/signup");
+										}}
+										text="Sign up"
+									/>
 								)}
 								{state.isGoBackButtonVisible && (
-									<GoBackButton />
+									<SecondaryButton
+										onClick={async () => {
+											await handleRedirect();
+										}}
+										text="Go back"
+									/>
 								)}
 								{state.isLogOutButtonVisible && (
-									<LogOutButton />
+									<SecondaryButton
+										onClick={handleLogout}
+										text="Log out"
+									/>
 								)}
 							</div>
 						</div>

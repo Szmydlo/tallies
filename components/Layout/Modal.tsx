@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
+
 import ReactDOM from "react-dom";
-import CloseButton from "../Buttons/CloseButton";
+import SecondaryButton from "../Buttons/SecondaryButton";
 
 const Backdrop = (props: { onClose: () => void }) => {
 	return (
@@ -16,7 +17,7 @@ const ModalOverlay = (props: { onClose: () => void; children: ReactNode }) => {
 		<div className="fixed top-[20vh] left-[25%] z-30 w-[50%] rounded-xl bg-white p-4 shadow-3xl">
 			<div>{props.children}</div>
 			<div className="flex w-full justify-end">
-				<CloseButton onClose={props.onClose} />
+				<SecondaryButton onClick={props.onClose} text="Close" />
 			</div>
 		</div>
 	);

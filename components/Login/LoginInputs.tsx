@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 
 import { Action } from "@reduxjs/toolkit";
+import PrimaryButton from "../Buttons/PrimaryButton";
 import { authActions } from "../../store/auth";
 import { supabase } from "../../supabase-client";
 import { useDispatch } from "react-redux";
@@ -99,12 +100,7 @@ const LoginInputs = (props: { onSuccess: () => void }) => {
 				</p>
 			)}
 			<div className="flex w-full justify-center ">
-				<button
-					className="w-18 rounded bg-gray-100 px-3 py-2 text-gray-900 transition duration-300 hover:bg-gray-300 hover:text-gray-800"
-					type="submit"
-				>
-					Login
-				</button>
+				<PrimaryButton type="submit" text="Login" />
 			</div>
 		</form>
 	);
