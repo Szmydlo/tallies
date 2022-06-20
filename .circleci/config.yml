@@ -5,11 +5,13 @@ orbs:
     heroku: circleci/heroku@0.0.10
 
 jobs:
-    build:
+    build_and_test:
         docker:
             - image: cimg/node:16.15.0
         steps:
             - checkout
+            - environment:
+                  NODE_ENV: development
             - restore_cache: #cache dependencies to skip reinstall
                   key: dependency-cache-{{ checksum "package.json" }}
             - run:
@@ -20,29 +22,28 @@ jobs:
                   paths:
                       - ./node_modules
             - run:
-                  name: Run test
-                  command: npm run test
-    e2e:
-        docker:
-            - image: mcr.microsoft.com/playwright:v1.22.0-focal
-        environment:
-            NODE_ENV: development # Needed if playwright is in `devDependencies`
-        steps:
-            - checkout
+                  name: Run server in background
+                  command: npm run dev
+                  background: true
             - run:
-                  name: Run E2E test
-                  command: npm install && npm run test-e2e
+                  name: Run test (Jest)
+                  command: npm run test
+            - run:
+                  name: Run test (Playwright)
+                  command: npm run test-e2e
+            - run:
+                  name: Create coverage report
+                  command: npm run create-report
+            - store_artifacts:
+                  path: /coverage
 
 workflows:
-    build_deploy_test:
+    build_test_deploy:
         jobs:
-            - build
+            - build_and_test
             - heroku/deploy-via-git:
                   requires:
                       - build
                   filters:
                       branches:
                           only: main
-            - e2e:
-                  requires:
-                      - heroku/deploy-via-git
