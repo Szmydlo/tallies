@@ -57,6 +57,7 @@ jobs:
                   path: /tmp/coverage
             - codecov/upload:
                   file: "./coverage/summary/coverage-final.json"
+                  token: $CODECOV_TOKEN
     e2e:
         docker:
             - image: cimg/node:16.15.0
