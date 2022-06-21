@@ -1,5 +1,6 @@
-/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
-module.exports = {
+import type { InitialOptionsTsJest } from "ts-jest";
+
+const config: InitialOptionsTsJest = {
 	preset: "ts-jest",
 	testEnvironment: "jsdom",
 	globals: {
@@ -23,3 +24,4 @@ module.exports = {
 	coverageDirectory: "./.nyc_output",
 	coverageReporters: ["json"],
 };
+export default config;
