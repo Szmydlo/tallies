@@ -14,7 +14,7 @@
 		"test": "jest",
 		"test2": "nyc npm run test",
 		"test-e2e": "playwright test",
-		"create-report": "nyc report --reporter html --reporter text -t .nyc_output --report-dir coverage/summary",
+		"create-report": "nyc report --reporter html --reporter text --reporter json -t .nyc_output --report-dir coverage/summary",
 		"coverage": "npm run test && npm run test-e2e && npm run create-report"
 	},
 	"dependencies": {
@@ -39,6 +39,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.26.0",
 		"autoprefixer": "^10.4.7",
 		"babel-plugin-istanbul": "^6.1.1",
+		"codecov": "^3.8.3",
 		"eslint": "8.7.0",
 		"eslint-config-next": "12.0.8",
 		"eslint-config-prettier": "^8.5.0",

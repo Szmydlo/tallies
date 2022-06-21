@@ -3,6 +3,7 @@ version: 2.1
 orbs:
     node: circleci/node@5.0.2
     heroku: circleci/heroku@0.0.10
+    codecov: codecov/codecov@1.0.2
 
 jobs:
     build_and_jest:
@@ -54,6 +55,8 @@ jobs:
             - run: cp -a ./coverage/. /tmp/coverage
             - store_artifacts:
                   path: /tmp/coverage
+            - codecov/upload:
+                  file: "./coverage/summary/coverage-final.json"
     e2e:
         docker:
             - image: cimg/node:16.15.0
