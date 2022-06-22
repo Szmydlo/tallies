@@ -84,11 +84,10 @@ workflows:
     build_test_deploy:
         jobs:
             - build_and_jest
-            - e2e:
-                  requires:
-                      - build_and_jest
+            - e2e
             - create_report:
                   requires:
+                      - build_and_jest
                       - e2e
             - heroku/deploy-via-git:
                   requires:
