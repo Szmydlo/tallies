@@ -2,12 +2,15 @@
 
 ## June 2022:
 
+-   Code coverage reports in Codecov via CircleCI
+-   Merged code coverage from Jest and Playwright
 -   Redirection based on auth status
 -   Persistent sessions through localStorage
 -   Input validation
 
 ## May 2022:
 
+-   App deployed!
 -   Playwright E2E Testing
 -   Jest + React Testing Library for unit tests
 

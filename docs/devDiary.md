@@ -62,3 +62,11 @@ I managed to obtain merged coverage report from Jest and Playwright! Of course l
 ### 20.06.2022
 
 I haven't noticed that Jest and Playwright interpret lines differently, which breaks reports totally. I spent additional 5 hours on fixing this, but now it works (almost perfectly: it sometimes includes "import" statement, sometimes not), at least with line coverage. Gonna use it in CircleCI. I'm also thinking about creating Medium article as this is not really described and requires combining multiple things together.
+
+### 21.06.2022
+
+Yesterday after spending some time on configuring CircleCI I managed to get full (jest + Playwright) coverage report as output (artifact) in CircleCI build. I will now try to send it to Codecov. It works! I believe I can now somehow add coverage status to repo's readme to make it look nice. Also Codecov interprets lines way better than plain Istanbul. Next step is to enhance the coverage finally (and write ~~Medium~~ [dev.to](https://dev.to/) article).
+
+### 22.06.2022
+
+Unfortunately this approach costs performance: Jest (and only Jest) tests run up to 3 times slower (plus probably there is also an issue with NextJS build time as I don't use SWC, but Babel).
