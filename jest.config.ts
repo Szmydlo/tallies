@@ -21,7 +21,7 @@ const config: InitialOptionsTsJest = {
 		"!**/coverage/**",
 		"!next-env.d.ts",
 	],
-	coverageDirectory: "./.nyc_output",
+	coverageDirectory: "./coverage",
 	coverageReporters: ["json"],
 };
 export default config;

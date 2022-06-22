@@ -28,39 +28,7 @@ jobs:
             - persist_to_workspace:
                   root: .
                   paths:
-                      - .nyc_output/*
-            - run: ls ./.nyc_output
-    create_report:
-        docker:
-            - image: cimg/node:16.15.0
-        environment:
-            - NODE_ENV: development
-        steps:
-            - checkout
-            - attach_workspace:
-                  at: ./
-            - restore_cache: #cache dependencies to skip reinstall
-                  key: dependency-cache-{{ checksum "package.json" }}
-            - run:
-                  name: Install dependencies
-                  command: npm install
-            - save_cache:
-                  key: dependency-cache-{{ checksum "package.json" }}
-                  paths:
-                      - ./node_modules
-            - run:
-                  name: Create coverage report
-                  command: npm run create-report
-            - run: ls ./.nyc_output
-            - run: cp -a ./coverage/. /tmp/coverage
-            - store_artifacts:
-                  path: /tmp/coverage
-            - codecov/upload:
-                  file: "./.nyc_output/coverage-final.json"
-                  token: $CODECOV_TOKEN
-            - codecov/upload:
-                  file: "./.nyc_output/playwright_coverage.json"
-                  token: $CODECOV_TOKEN
+                      - coverage/*
     e2e:
         docker:
             - image: cimg/node:16.15.0
@@ -89,8 +57,28 @@ jobs:
             - persist_to_workspace:
                   root: .
                   paths:
-                      - .nyc_output/*
-            - run: ls ./.nyc_output
+                      - coverage/*
+    create_report:
+        docker:
+            - image: cimg/node:16.15.0
+        environment:
+            - NODE_ENV: development
+        steps:
+            - checkout
+            - attach_workspace:
+                  at: ./
+            - run:
+                  name: List coverage files
+                  command: ls ./coverage
+            - run: cp -a ./coverage/. /tmp/coverage
+            - store_artifacts:
+                  path: /tmp/coverage
+            - codecov/upload:
+                  file: "./coverage/coverage-final.json"
+                  token: $CODECOV_TOKEN
+            - codecov/upload:
+                  file: "./coverage/playwright_coverage.json"
+                  token: $CODECOV_TOKEN
 
 workflows:
     build_test_deploy:

@@ -14,7 +14,7 @@
 		"test": "jest",
 		"test2": "nyc npm run test",
 		"test-e2e": "playwright test",
-		"create-report": "nyc report --reporter html --reporter text --reporter json -t .nyc_output --report-dir coverage/summary",
+		"create-report": "nyc report --reporter html --reporter text --reporter json -t coverage --report-dir coverage/summary",
 		"coverage": "npm run test && npm run test-e2e && npm run create-report"
 	},
 	"dependencies": {

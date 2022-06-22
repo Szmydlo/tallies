@@ -3,7 +3,7 @@ import * as path from "path";
 
 import { test as baseTest } from "@playwright/test";
 
-const istanbulCLIOutput = path.join(process.cwd(), ".nyc_output");
+const istanbulCLIOutput = path.join(process.cwd(), "coverage");
 
 export const test = baseTest.extend({
 	context: async ({ context }, use) => {
