@@ -56,7 +56,10 @@ jobs:
             - store_artifacts:
                   path: /tmp/coverage
             - codecov/upload:
-                  file: "./coverage/summary/coverage-final.json"
+                  file: "./.nyc_output/coverage-final.json"
+                  token: $CODECOV_TOKEN
+            - codecov/upload:
+                  file: "./.nyc_output/playwright_coverage.json"
                   token: $CODECOV_TOKEN
     e2e:
         docker:
