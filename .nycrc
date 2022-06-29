@@ -14,7 +14,5 @@
 	],
 	"reporter": [
 		"html"
-	],
-	"sourceMap": false,
-	"instrument": false
+	]
 }

@@ -12,7 +12,6 @@
 		"test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build",
 		"prepare": "husky install",
 		"test": "jest",
-		"test2": "nyc npm run test",
 		"test-e2e": "playwright test",
 		"create-report": "nyc report --reporter html --reporter text --reporter json -t coverage --report-dir coverage/summary",
 		"coverage": "npm run test && npm run test-e2e && npm run create-report"
