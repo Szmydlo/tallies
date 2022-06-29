@@ -70,3 +70,7 @@ Yesterday after spending some time on configuring CircleCI I managed to get full
 ### 22.06.2022
 
 Unfortunately this approach costs performance: Jest (and only Jest) tests run up to 3 times slower (plus probably there is also an issue with NextJS build time as I don't use SWC, but Babel).
+
+### 29.06.2022
+
+I have written my first tech article!!! You can find it here: [Comprehensive coverage Jest+Playwright in Next.js TS](https://dev.to/szmydlo/comprehensive-coverage-jestplaywright-in-nextjs-ts-1df2)

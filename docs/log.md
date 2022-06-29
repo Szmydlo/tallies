@@ -2,6 +2,7 @@
 
 ## June 2022:
 
+-   Dev.to [article](https://dev.to/szmydlo/comprehensive-coverage-jestplaywright-in-nextjs-ts-1df2) about Jest+Playwright coverage
 -   Code coverage reports in Codecov via CircleCI
 -   Merged code coverage from Jest and Playwright
 -   Redirection based on auth status
