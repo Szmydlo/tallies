@@ -14,7 +14,7 @@ const Backdrop = (props: { onClose: () => void }) => {
 
 const ModalOverlay = (props: { onClose: () => void; children: ReactNode }) => {
 	return (
-		<div className="fixed top-[20vh] left-[25%] z-30 w-[50%] rounded-xl bg-white p-4 shadow-3xl">
+		<div className="fixed top-[20vh] left-[calc(50%-250px)] z-30 w-[500px] rounded-xl bg-white p-4 shadow-3xl">
 			<div>{props.children}</div>
 			<div className="flex w-full justify-end">
 				<SecondaryButton onClick={props.onClose} text="Close" />
