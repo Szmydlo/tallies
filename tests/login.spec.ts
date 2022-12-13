@@ -7,8 +7,8 @@ type Sources = {
 };
 
 test.beforeEach(async ({ page }) => {
-	// await page.goto("https://tallies-app.herokuapp.com/");
-	await page.goto("http://localhost:3000/");
+	await page.goto("https://szmydlo.github.io/tallies/");
+	// await page.goto("http://localhost:3000/");
 });
 
 test.describe("Login", () => {
