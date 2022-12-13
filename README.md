@@ -1,6 +1,7 @@
 # tallies
 
 First app to properly challenge your friends!
+Have a look [here](https://szmydlo.github.io/tallies)
 
 Coverage from Jest and Playwright:  
 [![codecov](https://codecov.io/gh/Szmydlo/tallies/branch/main/graph/badge.svg?token=PQYKMYE8NP)](https://codecov.io/gh/Szmydlo/tallies)
